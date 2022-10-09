@@ -12,15 +12,18 @@ async def on_ready():
 
 @bot.event
 async def on_member_join(member):
-    role = member.guild.get_role(role_id=settings.member_role_id)  # role_id on join
+    role = member.guild.get_role(settings.member_role_id)
     await member.add_roles(role)
-    welcome = bot.get_channel(settings.welcome_chat_id)  # chat_id
+    welcome = bot.get_channel(settings.welcome_chat_id)
+    info_chat = bot.get_channel(settings.info_chat_id)
     embed = discord.Embed(
-        title=f"Добро пожаловать! {member.mention}",
-        description=f"Получите роли в #📃info !",
+        title="Добро пожаловать!",
+        description=f"{member.mention},\nПолучите роли в {info_chat.mention} !",
         color=discord.Color.red()
     )
-    embed.set_thumbnail(url=settings.logo_url)
+    embed.set_footer(
+        icon_url=settings.logo_url,
+        text="Sad Reality")
     await welcome.send(embed=embed)
 
 
